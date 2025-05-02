@@ -1,20 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/astro/components';
 
-const { title } = Astro.locals;
+// const { title } = Astro.locals;
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
 ---
 
-<Layout title={`Publico - ${title}`}>
-	<main class="max-w-xl mx-auto py-12">
+<Layout title="Publico - inicio app">
+	<main class="max-w-xl mx-auto py-12 grid grid-cols-1">
+		<div class="justify-self-end">
+			<UserButton showName />
+		</div>
 		<h1 class="text-3xl font-bold">Retos app</h1>
 		<p>Registra, crea y visualiza tus retos personales que quieres completar. Solo para usuarios autenticados</p>
-		<div class="mt-12">
-			<button class="bg-blue-500 text-white px-4 rounded">Iniciar sesion</button>
-		</div>
+		<SignedOut>
+			<div class="mt-12">
+				<SignInButton mode="modal" class="bg-blue-500 text-white px-4 rounded">Iniciar sesion</SignInButton>
+			</div>
+		</SignedOut>
 
-		<p class="mt-12">Si ya has iniciado sesion, entra a tu <a class="text-blue-500 underline" href="/retos">panel de retos</a></p>
+		<SignedIn>
+			<p class="mt-12">Ya has iniciado sesion, entra a tu <a class="text-blue-500 underline" href="/retos">panel de retos</a></p>
+		</SignedIn>
 	</main>
 </Layout>
