@@ -1,0 +1,34 @@
+---
+export type Props = {
+    retos: string[]
+}
+const { retos } = Astro.props;
+---
+<ul id="challenge-list" class="space-y-2 mt-4">
+    {
+        retos.map((challenge) => (
+            <li class="p-2 rounded bg-gray-100 dark:bg-gray-800">
+                {challenge}
+            </li>
+        ))
+    }
+</ul>
+
+<template id="challenge-template">
+    <li class="p-2 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-100"></li>
+</template>
+
+<script>
+    // listen custom event tto update retos
+    const list = document.getElementById('challenge-list');
+    const template = document.getElementById(
+        'challenge-template'
+    ) as HTMLTemplateElement
+
+    document.addEventListener('challenge-added', function (e) {
+        const challenge = ( e as CustomEvent).detail.challenge
+        const li = template?.content.cloneNode(true)
+        li.textContent = challenge
+        list?.appendChild(li)
+    })
+</script>
