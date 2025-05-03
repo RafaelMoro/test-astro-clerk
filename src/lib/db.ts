@@ -4,7 +4,7 @@ import path from 'node:path'
 const DATA_DIR = path.resolve('./data/challenges')
 
 async function getUserFile(userId: string) {
-    await FileSystem.mkdir(DATA_DIR, { recursive: true })
+    await fs.mkdir(DATA_DIR, { recursive: true })
     return path.join(DATA_DIR, `${userId}.json`)
 }
 
