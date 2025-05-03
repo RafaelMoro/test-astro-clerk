@@ -2,7 +2,9 @@ import type { APIRoute } from "astro";
 import { getUserChallenges, addUserChallenge } from "../../lib/db";
 
 export const GET: APIRoute = async ({ locals }) => {
-    const user = { id: 'todo' }
+    const user = await locals.currentUser()
+    if (!user) return new Response('Unauthorized', { status: 401 })
+
     const challenges = await getUserChallenges(user.id)
     return new Response(JSON.stringify({ challenges }), {
         status: 200,
@@ -13,7 +15,9 @@ export const GET: APIRoute = async ({ locals }) => {
 }
 
 export const POST: APIRoute = async ({ locals, request }) => {
-    const user = { id: 'todo' }
+    const user = await locals.currentUser()
+    if (!user) return new Response('Unauthorized', { status: 401 })
+
     const data = await request.json()
     const { challenge } = data
 
