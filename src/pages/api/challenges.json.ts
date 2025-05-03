@@ -1,0 +1,29 @@
+import type { APIRoute } from "astro";
+import { getUserChallenges, addUserChallenge } from "../../lib/db";
+
+export const GET: APIRoute = async ({ locals }) => {
+    const user = { id: 'todo' }
+    const challenges = await getUserChallenges(user.id)
+    return new Response(JSON.stringify({ challenges }), {
+        status: 200,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}
+
+export const POST: APIRoute = async ({ locals, request }) => {
+    const user = { id: 'todo' }
+    const data = await request.json()
+    const { challenge } = data
+
+    if (typeof challenge === 'string' && challenge.trim().length > 0) {
+        await addUserChallenge(user.id, challenge.trim())
+        return new Response(JSON.stringify({ ok: true }), {
+            status: 201,
+        })
+    }
+
+    return new Response(JSON.stringify({ ok: false, error: 'Challenge invalido' }), { status: 400 })
+    
+}
