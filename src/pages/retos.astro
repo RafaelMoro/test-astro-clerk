@@ -1,4 +1,6 @@
 ---
+import AddChallenge from '../components/AddChallenge.astro';
+import ChallengesList from '../components/ChallengesList.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -6,8 +8,7 @@ import Layout from '../layouts/Layout.astro';
 	<main class="max-w-xl mx-auto py-12">
 		<h1 class="text-3xl font-bold">Retos app</h1>
         <p>Esta pagina esta protegida y solo un usuario autenticado lo puede ver</p>
-		<ul>
-            <li>Mi primer reto</li>
-        </ul>
+		<ChallengesList retos={[]} />
+		<AddChallenge />
 	</main>
 </Layout>
